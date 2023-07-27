@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import useFetchData from '../hooks/useFetchData';
+import { useEffect } from 'react';
 
 function Home() {
   const { data, loading } = useFetchData('https://jsonplaceholder.typicode.com/users'); // Zamijenite sa stvarnim URL-om API-ja
   const tableHeaders = data.length > 0 ? Object.keys(data[0]) : [];
+
+  useEffect(()=> {
+    console.log(data)
+    console.table(data)
+  }, [data])
 
   if (loading) {
     return <p>Loading...</p>;
