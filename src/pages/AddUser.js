@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MultiStepForm } from "../components/MultiStepForm";
+// import { MultiStepForm } from "../components/MultiStepForm";
 
 function AddUser() {
   const [user, setUser] = useState({
@@ -20,10 +20,59 @@ function AddUser() {
     website: '',
     company: {
       name: '',
-      catchPhrase:'',
-      bs:''
+      catchPhrase: '',
+      bs: ''
     }
   })
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const handleAddressChange = (event) => {
+    const { name, value } = event.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      address: {
+        ...prevUser.address,
+        [name]: value
+      }
+    }));
+  };
+
+  const handleGeoChange = (event) => {
+    const { name, value } = event.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      address: {
+        ...prevUser.address,
+        geo: {
+          ...prevUser.address.geo,
+          [name]: value
+        }
+      }
+    }));
+  };
+
+  const handleCompanyChange = (event) => {
+    const { name, value } = event.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      company: {
+        ...prevUser.company,
+        [name]: value
+      }
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(user); // Ovde možete dalje postupiti sa unetim podacima
+  };
 
   useEffect(() => {
     console.log(user);
@@ -34,87 +83,91 @@ function AddUser() {
       <div className="row">
         <div className="col-6 offset-3">
 
-          <form className="mt-2">
+          <form className="mt-2" onSubmit={handleSubmit}>
             <div className="form-group row mb-2">
               <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control" id="name" name="name" placeholder="John Doe" onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })} />
+                <input type="text" className="form-control" id="name" name="name" placeholder="John Doe" onChange={handleChange} />
               </div>
             </div>
             <div className="form-group row mb-2">
               <label htmlFor="username" className="col-sm-2 col-form-label">Username</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control" id="username" placeholder="exmp: johndoe" onChange={(e) => setUser({ ...user, username: e.target.value })} />
+                <input type="text" className="form-control" name="username" id="username" placeholder="exmp: johndoe" onChange={handleChange} />
               </div>
             </div>
             <div className="form-group row mb-2">
               <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
               <div className="col-sm-10">
-                <input type="email" className="form-control" id="email" placeholder="demo@demo.com" onChange={(e) => setUser({ ...user, email: e.target.value })} />
+                <input type="email" className="form-control" name="email" id="email" placeholder="demo@demo.com" onChange={handleChange} />
               </div>
             </div>
-
             <div className="form-group mb-2">
               <label htmlFor="address" className="col-sm-2 col-form-label">Address</label>
               <div className="col-sm-10 ms-2 form-group row ">
                 <label htmlFor="city" className="col-sm-2 col-form-label">City</label>
                 <div className="col-sm-10 mb-2">
-                  <input type="text" className="form-control" id="city" placeholder="Pere Perica 22" onChange={(e) => setUser({ ...user, address: e.target.value })} />
+                  <input type="text" className="form-control" name="city" id="city" placeholder="Pere Perica 22" onChange={handleAddressChange} />
                 </div>
                 <label htmlFor="address" className="col-sm-2 col-form-label">Street</label>
                 <div className="col-sm-10 mb-2">
-                  <input type="text" className="form-control" id="address" placeholder="Pere Perica 22" onChange={(e) => setUser({ ...user, address: e.target.value })} />
+                  <input type="text" className="form-control" name="street" id="street" placeholder="Pere Perica 22" onChange={handleAddressChange} />
                 </div>
                 <label htmlFor="address" className="col-sm-2 col-form-label">Suite</label>
                 <div className="col-sm-10 mb-2">
-                  <input type="text" className="form-control" id="address" placeholder="Pere Perica 22" onChange={(e) => setUser({ ...user, address: e.target.value })} />
+                  <input type="text" className="form-control" name="suite" id="suite" placeholder="Pere Perica 22" onChange={handleAddressChange} />
                 </div>
                 <label htmlFor="address" className="col-sm-2 col-form-label">Zipcode</label>
                 <div className="col-sm-10 mb-2">
-                  <input type="text" className="form-control" id="address" placeholder="Pere Perica 22" onChange={(e) => setUser({ ...user, address: e.target.value })} />
+                  <input type="text" className="form-control" name="zipcode" id="zipcode" placeholder="Pere Perica 22" onChange={handleAddressChange} />
                 </div>
                 <div className="col-sm-10 form-group row">
                   <div className="form-group row ps-3 ms-2 mb-2">
                     <label htmlFor="address" className="col-sm-2 col-form-label">Lat</label>
                     <div className="col-sm-10 mb-2">
-                      <input type="text" className="form-control" id="address" placeholder="Pere Perica 22" onChange={(e) => setUser({ ...user, address: e.target.value })} />
+                      <input type="text" className="form-control" name="lat" id="lat" placeholder="Pere Perica 22" onChange={handleGeoChange} />
                     </div>
                     <label htmlFor="address" className="col-sm-2 col-form-label">Lng</label>
                     <div className="col-sm-10 mb-2">
-                      <input type="text" className="form-control" id="address" placeholder="Pere Perica 22" onChange={(e) => setUser({ ...user, address: e.target.value })} />
+                      <input type="text" className="form-control" name="lng" id="lng" placeholder="Pere Perica 22" onChange={handleGeoChange} />
                     </div>
                   </div>
                 </div>
               </div>
-
-
-
-
             </div>
-
             <div className="form-group row mb-2">
               <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control" id="phone" placeholder="+432 45 456 65 67" onChange={(e) => setUser({ ...user, phone: e.target.value })} />
+                <input type="text" className="form-control" name="phone" id="phone" placeholder="+432 45 456 65 67" onChange={handleChange} />
               </div>
             </div>
             <div className="form-group row mb-2">
               <label htmlFor="website" className="col-sm-2 col-form-label">Website</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control" id="website" placeholder="Exmp: www.deadae.ad" onChange={(e) => setUser({ ...user, website: e.target.value })} />
+                <input type="text" className="form-control" name="website" id="website" placeholder="Exmp: www.deadae.ad" onChange={handleChange} />
               </div>
             </div>
-            <div className="form-group row mb-2">
-              <label htmlFor="company" className="col-sm-2 col-form-label">Company</label>
-              <div className="col-sm-10">
-                <input type="text" className="form-control" id="company" placeholder="Company" onChange={(e) => setUser({ ...user, company: e.target.value })} />
+            <div className="col-sm-10 form-group row">
+              <div className="form-group row ps-3 ms-2 mb-2">
+                <label htmlFor="address" className="col-sm-2 col-form-label">Name</label>
+                <div className="col-sm-10 mb-2">
+                  <input type="text" className="form-control" name="name" id="nameComp" placeholder="ILR" onChange={handleCompanyChange} />
+                </div>
+                <label htmlFor="address" className="col-sm-2 col-form-label">Catch Phrase</label>
+                <div className="col-sm-10 mb-2">
+                  <input type="text" className="form-control" name="catchPhrase" id="catchPhrase" placeholder="..." onChange={handleCompanyChange} />
+                </div>
+                <label htmlFor="address" className="col-sm-2 col-form-label">Bs</label>
+                <div className="col-sm-10 mb-2">
+                  <input type="text" className="form-control" name="bs" id="bs" placeholder="..." onChange={handleCompanyChange} />
+                </div>
               </div>
             </div>
           </form>
         </div>
       </div>
-      <hr />
-      <MultiStepForm />
+      {/* <hr />
+      <MultiStepForm /> */}
     </div>
   );
 }
