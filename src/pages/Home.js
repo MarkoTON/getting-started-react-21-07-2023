@@ -2,19 +2,39 @@ import { Link } from 'react-router-dom';
 import useFetchData from '../hooks/useFetchData';
 import { useEffect } from 'react';
 import Delete from '../components/Delete';
+import { useDispatch, useSelector } from "react-redux";
+import { setUserFromAPI, removeUserFromStore } from '../store/actions'
 
 function Home() {
   const { data, loading, deleteUser } = useFetchData('https://jsonplaceholder.typicode.com/users'); // Zamijenite sa stvarnim URL-om API-ja
   const tableHeaders = data.length > 0 ? Object.keys(data[0]) : [];
+  const dispatch = useDispatch();
+
+
+  const { users }  = useSelector(state => state);
 
   const handleDelite = (id) => {
+    console.log(id)
+    dispatch(removeUserFromStore(id))
     deleteUser(id);
   }
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
+  const setDataToStore = ()=> {
+    dispatch(setUserFromAPI(data));
+  }
 
+  // useEffect(() => {
+  //   console.log(data)
+  // }, [data])
+
+  useEffect(() => {
+    if(data){
+      if (!users) {
+        setDataToStore();
+      }
+    }
+  }, [users, dispatch, data]);
+  
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -31,10 +51,10 @@ function Home() {
         </thead>
         <tbody>
 
-          {data.map((item) => {
+          {data &&  users.users.map((item, index) => {
             return (
               <tr key={item.id}>
-                <td>{item.id}</td>
+                <td>{index + 1}</td>
                 <td><Link to={'./user/' + item.id}>{item.name}</Link></td>
                 <td>{item.username}</td>
                 <td>{item.email}</td>
@@ -50,6 +70,7 @@ function Home() {
           })}
         </tbody>
       </table>
+      <hr />
     </div>
   );
 }

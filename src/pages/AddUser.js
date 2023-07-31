@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-// import { MultiStepForm } from "../components/MultiStepForm";
 import useFetchData from "../hooks/useFetchData";
 import { v4 as uuidv4 } from 'uuid';
 
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/actions";
+
 function AddUser() {
+  const dispatch = useDispatch();
   const { addUserPOST } = useFetchData('https://jsonplaceholder.typicode.com/users');
 
   const [user, setUser] = useState({
-    id:'',
+    id: '',
     name: '',
     username: '',
     email: '',
@@ -75,17 +78,20 @@ function AddUser() {
   };
 
   const handleSubmit = (event) => {
-    setUser((prevUser)=>({
-      ...prevUser,
-      id: uuidv4()
-    }));
     event.preventDefault();
-    addUserPOST(user);
-    console.log(user); // Ovde možete dalje postupiti sa unetim podacima
+    const newID = uuidv4();
+    setUser((prevUser) => ({
+      ...prevUser,
+      id: newID
+    }));
   };
 
   useEffect(() => {
-    console.log(user);
+    console.log(user.id);
+    if (user.id !== '') {
+      addUserPOST(user);
+      dispatch(addUser(user))
+    }
   }, [user])
 
   return (
@@ -177,8 +183,6 @@ function AddUser() {
           </form>
         </div>
       </div>
-      {/* <hr />
-      <MultiStepForm /> */}
     </div>
   );
 }

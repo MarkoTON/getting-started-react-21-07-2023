@@ -1,0 +1,5 @@
+export const ADD_USER = "ADD_USER";
+export const SET_USER_FROM_API = "SET_USER_FROM_API";
+export const REMOVE_USER_FROM_STORE = "REMOVE_USER_FROM_STORE";
+export const TOGGLE_TODO = "TOGGLE_TODO";
+export const SET_FILTER = "SET_FITLER";

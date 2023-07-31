@@ -12,8 +12,7 @@
 // export default store;
 
 import { createStore } from 'redux';
-import counterReducer from './reducers';
 
-const store = createStore(counterReducer);
+import rootReducer from './reducer'; // it will call in folder /reducer/index.js - inicijalno zato nije stavljeno ./reducer/index.js
 
-export default store;
+export default createStore(rootReducer);
