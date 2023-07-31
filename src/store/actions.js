@@ -5,16 +5,15 @@ export const addUser = content => ({
   payload: {content}
 });
 
-export const setUserFromAPI = content => ({
+export const setUserFromAPI = users => ({
   type: SET_USER_FROM_API,
-  payload: {content}
+  payload: users
 });
 
 export const removeUserFromStore = content => ({
   type: REMOVE_USER_FROM_STORE,
   payload: {content}
 });
-
 
 // export const toggleTodo = id => ({
 //   type: TOGGLE_TODO,

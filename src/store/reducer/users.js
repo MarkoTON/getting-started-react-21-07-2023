@@ -20,13 +20,10 @@ const users = (state = initialState, action) => {
     }
     
     case SET_USER_FROM_API: {
-      const newUsers = action.payload.content;
+      console.log(action.payload);
       return {
         ...state,
-        users: [
-          ...state.users,
-          ...newUsers
-        ]
+        users: action.payload
       }
     }
     

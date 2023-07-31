@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom';
 import useFetchData from '../hooks/useFetchData';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Delete from '../components/Delete';
 import { useDispatch, useSelector } from "react-redux";
-import { setUserFromAPI, removeUserFromStore } from '../store/actions'
+import { removeUserFromStore } from '../store/actions'
 
 function Home() {
-  const { data, loading, deleteUser } = useFetchData('https://jsonplaceholder.typicode.com/users'); // Zamijenite sa stvarnim URL-om API-ja
-  const tableHeaders = data.length > 0 ? Object.keys(data[0]) : [];
+  const { deleteUser } = useFetchData('https://jsonplaceholder.typicode.com/users'); // Zamijenite sa stvarnim URL-om API-ja
+  const  users  = useSelector(state => state.users);
   const dispatch = useDispatch();
 
-
-  const { users }  = useSelector(state => state);
+  const [header, setHeader] = useState([])
 
   const handleDelite = (id) => {
     console.log(id)
@@ -19,39 +18,34 @@ function Home() {
     deleteUser(id);
   }
 
-  const setDataToStore = ()=> {
-    dispatch(setUserFromAPI(data));
-  }
-
-  // useEffect(() => {
-  //   console.log(data)
-  // }, [data])
-
   useEffect(() => {
-    if(data){
-      if (!users) {
-        setDataToStore();
+
+    const checkUsers = () => {
+      console.log(users.users)
+      if (users.users.length > 0) {
+        const tableHeaders = users.users;
+        let keys = Object.keys(tableHeaders[0])
+        setHeader(keys)
       }
     }
-  }, [users, dispatch, data]);
-  
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+
+    checkUsers()
+  }, [users.users])
+
 
   return (
     <div className='container'>
       <table className="table">
         <thead>
           <tr>
-            {tableHeaders.map((header) => (
+            {header.map((header) => (
               <th key={header}>{header}</th>
             ))}
           </tr>
         </thead>
         <tbody>
 
-          {data &&  users.users.map((item, index) => {
+          {users.users && users.users.map((item, index) => {
             return (
               <tr key={item.id}>
                 <td>{index + 1}</td>
