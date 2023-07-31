@@ -1,4 +1,4 @@
-import { ADD_USER, SET_USER_FROM_API, REMOVE_USER_FROM_STORE } from '../actionsTypes';
+import { ADD_USER, SET_USER_FROM_API, REMOVE_USER_FROM_STORE, FILTER_USER } from '../actionsTypes';
 
 const initialState = {
   users: [
@@ -36,6 +36,12 @@ const users = (state = initialState, action) => {
         ...state,
         users: newUsers
       }
+    }
+
+    case FILTER_USER: {
+      
+      
+      return state.users;
     }
     
     default: {

@@ -1,4 +1,4 @@
-import { ADD_USER, SET_USER_FROM_API, REMOVE_USER_FROM_STORE } from './actionsTypes';
+import { ADD_USER, SET_USER_FROM_API, REMOVE_USER_FROM_STORE, FILTER_USER } from './actionsTypes';
 
 export const addUser = content => ({
   type: ADD_USER,
@@ -15,13 +15,9 @@ export const removeUserFromStore = content => ({
   payload: {content}
 });
 
-// export const toggleTodo = id => ({
-//   type: TOGGLE_TODO,
-//   payload: { id }
-// });
 
-// export const setFilter = filter => ({
-//   type: SET_FILTER,
-//   payload: { filter }
-// });
+export const filterUser = filter => ({
+  type: FILTER_USER,
+  payload:  filter 
+});
 
