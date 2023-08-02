@@ -1,4 +1,7 @@
-function Search() {
+function Search(props) {
+  const handleSearchChange = (value) => {
+    props.searchTerm(value)
+  }
   return ( 
     <div className="row">
       <div className="col">
@@ -8,7 +11,7 @@ function Search() {
           name="search"
           id="search"
           placeholder="Search users..."
-          // onChange={(e)=>handleSearchChange(e.target.value)}
+          onChange={(e)=>handleSearchChange(e.target.value)}
         />
       </div>
     </div>
