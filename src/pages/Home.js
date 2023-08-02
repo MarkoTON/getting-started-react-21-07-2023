@@ -5,6 +5,7 @@ import Delete from '../components/Delete';
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserFromStore, filterUser } from '../store/actions'
 import Search from '../components/Search';
+import Table from '../components/Table';
 
 function Home() {
   const { deleteUser } = useFetchData('https://jsonplaceholder.typicode.com/users'); // Zamijenite sa stvarnim URL-om API-ja
@@ -43,35 +44,7 @@ function Home() {
   return (
     <div className='container pt-1'>
       <Search searchTerm={handleSearchChange} />
-      <table className="table">
-        <thead>
-          <tr>
-            {header.map((header) => (
-              <th key={header}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-
-          {users.filterUsers && users.filterUsers.map((item, index) => {
-            return (
-              <tr key={item.id}>
-                <td>{index + 1}</td>
-                <td><Link to={'./user/' + item.id}>{item.name}</Link></td>
-                <td>{item.username}</td>
-                <td>{item.email}</td>
-                <td>{item.address.street}</td>
-                <td>{item.phone}</td>
-                <td><a target='_blank' href={'https://www.google.rs'}>{item.website}</a></td>
-                <td className='d-flex justify-content-between'>
-                  {item.company.name}
-                  <Delete itemID={item.id} deleteItem={handleDelite} />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Table users={users.filterUsers} header={header} deleteItem={handleDelite} />
       <hr />
     </div>
   );
