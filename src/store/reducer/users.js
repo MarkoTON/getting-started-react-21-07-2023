@@ -2,7 +2,8 @@ import { ADD_USER, SET_USER_FROM_API, REMOVE_USER_FROM_STORE, FILTER_USER } from
 
 const initialState = {
   users: [
-  ]
+  ],
+  filterUsers: []
 }
 
 const users = (state = initialState, action) => {
@@ -39,9 +40,14 @@ const users = (state = initialState, action) => {
     }
 
     case FILTER_USER: {
-      
-      
-      return state.users;
+      const searchTerm = action.payload.toLowerCase();
+      const filteredUsers = state.users.filter((user) =>
+        user.name.toLowerCase().includes(searchTerm)
+      );
+      return {
+        ...state,
+        filterUsers: filteredUsers,
+      };
     }
     
     default: {

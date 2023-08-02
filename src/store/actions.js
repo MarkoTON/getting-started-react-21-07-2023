@@ -16,8 +16,10 @@ export const removeUserFromStore = content => ({
 });
 
 
-export const filterUser = filter => ({
-  type: FILTER_USER,
-  payload:  filter 
-});
+export const filterUser = (filter) => {
+  return {
+    type: 'FILTER_USER',
+    payload: filter,
+  };
+};
 
