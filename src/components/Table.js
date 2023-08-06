@@ -1,16 +1,42 @@
 import { Link } from 'react-router-dom';
 import Delete from './Delete';
+import { useEffect, useState } from 'react';
 
 function Table(props) {
-  const users = props.users;
+  const [users, setUsers] = useState();
   const header = props.header;
   const deleteItem = props.deleteItem;
+
+  const handleSort = (value) => {
+    const clonedUsers = [...users];
+    const sortUsers = clonedUsers.sort((a,b)=> {
+      if(value === 'address' || value === 'company' || value === 'id'){
+        return 0
+      } else {
+        const nameA = a[value].toUpperCase();
+        const nameB = b[value].toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      }
+    })
+    setUsers(sortUsers);
+  }
+
+  useEffect(()=>{
+    setUsers(props.users)
+  },[props.users])
+
   return ( 
     <table className="table">
         <thead>
           <tr>
-            {header.map((header) => (
-              <th key={header}>{header}</th>
+            {header && header.map((header) => (
+              <th onClick={()=> handleSort(header)} key={header}>{ header.charAt(0).toUpperCase() + header.slice(1)}</th>
             ))}
           </tr>
         </thead>
